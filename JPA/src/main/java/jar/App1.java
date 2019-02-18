@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  * Hello world!
@@ -21,6 +22,7 @@ public class App1
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         
         entityManager.getTransaction().begin();
+        
         
         //31 JPQL
         /*
@@ -46,12 +48,26 @@ public class App1
         //Query query = entityManager.createQuery("SELECT p FROM Person1 p ORDER BY p.name DESC");
         
         //Creating native query -- but not efficient and not elegant
-        Query query = entityManager.createNativeQuery("SELECT * FROM PERSON_TABLE1 WHERE age<30", Person1.class);
+        
+        //Query query = entityManager.createNativeQuery("SELECT * FROM PERSON_TABLE1 WHERE age<30", Person1.class);
+       
+        //--Query query = entityManager.createNamedQuery("person1.getAll");
+        
+       //or you can do this
+        //TypedQuery<Person1> query = entityManager.createNamedQuery("person1.getAll",Person1.class); //--same implementation
+        //TypedQuery<Person1> query = entityManager.createNamedQuery("person1.getPersonById",Person1.class); //--same implementation
+        //query.setParameter("id", 6);
+        
+        TypedQuery<Person1> query = entityManager.createNamedQuery("person1.getPersonByName",Person1.class); //--same implementation
+        query.setParameter("name", "ryan");
         List<Person1> people = (List<Person1>) query.getResultList();
         	
         for(Person1 p: people) {
         	System.out.println(p);
         }
+        
+        
+        
         
         
         entityManager.close();
