@@ -4,12 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 //CRUD Operations
 
 @Entity
 @Table(name="PERSON_TABLE1")
+//@NamedQuery(name="person1.getAll", query="SELECT p FROM Person1 p")
+
+@NamedQueries({ @NamedQuery(name="person1.getAll", query="SELECT p FROM Person1 p"),
+	//@NamedQuery(name="person1.getPersonById", query="SELECT p FROM Person1 p WHERE p.id = :id")})
+@NamedQuery(name="person1.getPersonByName", query="SELECT p FROM Person1 p WHERE p.name = :name")})
+ 
 public class Person1 {
 	
 	@Id
